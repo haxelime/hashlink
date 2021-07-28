@@ -1,0 +1,79 @@
+name: CI
+on: [push, pull_request]
+
+jobs:
+
+  linux:
+    runs-on: ubuntu-18.04
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      
+      - run: |
+          sudo apt-get update -qqy
+          sudo apt-get install -qqy \
+            cmake \
+            make \
+            gcc \
+            libz-dev \
+            zlib1g-dev \
+            libpng-dev \
+            libsdl2-dev \
+            libvorbis-dev \
+            libalut-dev \
+            libmbedtls-dev \
+            libturbojpeg0-dev \
+            libuv1-dev \
+            libopenal-dev \
+            neko \
+            curl \
+            ca-certificates
+          
+      - run: |
+          sudo dpkg --add-architecture i386
+          sudo apt-get install -qqy \
+            cmake \
+            make \
+            gcc-multilib \
+            libz-dev:i386 \
+            zlib1g-dev:i386 \
+            libpng-dev:i386 \
+            libsdl2-dev:i386 \
+            libvorbis-dev:i386 \
+            libalut-dev:i386 \
+            libmbedtls-dev:i386 \
+            libturbojpeg0-dev:i386 \
+            libuv1-dev:i386 \
+            libopenal-dev:i386 \
+            neko \
+            curl \
+            ca-certificates
+
+      - run: make
+
+  macos:
+    runs-on: macos-10.15
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      
+      - run: |
+          brew update
+          brew install neko
+          brew bundle
+      
+      - run: make
+
+  windows:
+    runs-on: windows-latest
+    steps:
+
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      
+      - run: MSBuild hl.sln /nologo /clp:ErrorsOnly "-p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
