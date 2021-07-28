@@ -93,30 +93,30 @@ jobs:
       - uses: Amadevus/pwsh-script@v2
         with:
           script: |
-          Invoke-WebRequest https://www.libsdl.org/release/SDL2-devel-2.0.5-VC.zip -OutFile SDL.zip
-          Expand-Archive SDL.zip -DestinationPath .
-          Move-Item SDL2-* include/sdl
-          Remove-Item SDL.zip
+            Invoke-WebRequest https://www.libsdl.org/release/SDL2-devel-2.0.5-VC.zip -OutFile SDL.zip
+            Expand-Archive SDL.zip -DestinationPath .
+            Move-Item SDL2-* include/sdl
+            Remove-Item SDL.zip
       - uses: Amadevus/pwsh-script@v2
         with:
           script: |
-          Invoke-WebRequest http://openal-soft.org/openal-binaries/openal-soft-1.17.2-bin.zip -OutFile openal.zip
-          Expand-Archive openal.zip -DestinationPath .
-          Move-Item openal-* include/openal
-          Remove-Item openal.zip
+            Invoke-WebRequest http://openal-soft.org/openal-binaries/openal-soft-1.17.2-bin.zip -OutFile openal.zip
+            Expand-Archive openal.zip -DestinationPath .
+            Move-Item openal-* include/openal
+            Remove-Item openal.zip
       - uses: Amadevus/pwsh-script@v2
         with:
           script: |
-          Invoke-WebRequest $(FFMPEG_URL) -OutFile ffmpeg.zip
-          Expand-Archive ffmpeg.zip -DestinationPath .
-          Move-Item ffmpeg-* include/ffmpeg
-          Remove-Item ffmpeg.zip
+            Invoke-WebRequest $(FFMPEG_URL) -OutFile ffmpeg.zip
+            Expand-Archive ffmpeg.zip -DestinationPath .
+            Move-Item ffmpeg-* include/ffmpeg
+            Remove-Item ffmpeg.zip
       - uses: Amadevus/pwsh-script@v2
         with:
           script: |
-          Set-Service wuauserv -StartupType Manual
-          choco install --no-progress neko -y
-          $nekoPath = (Get-ChildItem C:/ProgramData/chocolatey/lib/neko/*/neko.dll -Recurse).Directory
-          Write-Host "##vso[task.setvariable variable=NEKOPATH]$nekoPath"
+            Set-Service wuauserv -StartupType Manual
+            choco install --no-progress neko -y
+            $nekoPath = (Get-ChildItem C:/ProgramData/chocolatey/lib/neko/*/neko.dll -Recurse).Directory
+            Write-Host "##vso[task.setvariable variable=NEKOPATH]$nekoPath"
       
       - run: MSBuild hl.sln /nologo /clp:ErrorsOnly "-p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
