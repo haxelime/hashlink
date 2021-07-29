@@ -98,12 +98,14 @@ jobs:
           brew update
           brew install neko
           brew bundle
+        env:
+          OSX_SDK: 10.14
       
       - run: |
           make
           make release
         env:
-          OSX_SDK: 10.3
+          OSX_SDK: 10.14
           
       - uses: actions/upload-artifact@v2
         with:
