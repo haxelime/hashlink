@@ -3,7 +3,7 @@ on: [push, pull_request]
 
 jobs:
 
-  linux-32:
+  linux-64:
     runs-on: ubuntu-18.04
     steps:
 
@@ -31,9 +31,19 @@ jobs:
             curl \
             ca-certificates
 
-      - run: make
+      - run: |
+          make
+          make release
+        env:
+          MARCH: 64
+      
+      - uses: actions/upload-artifact@v2
+        with:
+          name: linux-64
+          path: *.tgz
+          if-no-files-found: error
     
-  linux-64:
+  linux-32:
     runs-on: ubuntu-18.04
     steps:
 
@@ -62,8 +72,18 @@ jobs:
             curl \
             ca-certificates
 
-      - run: make
-
+      - run: |
+          make
+          make release
+        env:
+          MARCH: 32
+      
+      - uses: actions/upload-artifact@v2
+        with:
+          name: linux-32
+          path: *.tgz
+          if-no-files-found: error
+        
   macos:
     runs-on: macos-10.15
     steps:
@@ -78,7 +98,15 @@ jobs:
           brew bundle
           brew install mbedtls@2
       
-      - run: make
+      - run: |
+          make
+          make release
+          
+      - uses: actions/upload-artifact@v2
+        with:
+          name: macos
+          path: *.tgz
+          if-no-files-found: error
 
   windows:
     runs-on: windows-latest
@@ -120,3 +148,11 @@ jobs:
             Write-Host "##vso[task.setvariable variable=NEKOPATH]$nekoPath"
       
       - run: MSBuild hl.sln /nologo /clp:ErrorsOnly "-p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
+
+      - run: make release
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: windows
+          path: *.zip
+          if-no-files-found: error
