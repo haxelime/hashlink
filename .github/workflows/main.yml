@@ -150,8 +150,6 @@ jobs:
       
       - run: MSBuild hl.sln /nologo /clp:ErrorsOnly "-p:Configuration=Release;PlatformToolset=v142;WindowsTargetPlatformVersion=10"
 
-      - run: make release
-
       - uses: actions/upload-artifact@v2
         with:
           name: windows
