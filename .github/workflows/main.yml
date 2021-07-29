@@ -107,7 +107,7 @@ jobs:
       
       - run: |
           pushd /usr/local/opt/ && ls; popd
-          pushd /usr/local/opt/mbedtls && ls; popd
+          pushd /usr/local/opt/mbedtls@2 && ls; popd
 
       - run: |
           make
