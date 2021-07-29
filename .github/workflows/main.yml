@@ -102,6 +102,7 @@ jobs:
           brew update
           brew install neko
           brew bundle
+          brew reinstall mbedtls@2
         env:
           OSX_SDK: 10.14
       
