@@ -96,11 +96,12 @@ jobs:
           brew update
           brew install neko
           brew bundle
-          brew install mbedtls@2
       
       - run: |
           make
           make release
+        env:
+          OSX_SDK: 10.15
           
       - uses: actions/upload-artifact@v2
         with:
@@ -154,5 +155,5 @@ jobs:
       - uses: actions/upload-artifact@v2
         with:
           name: windows
-          path: ./*.zip
+          path: x64/
           if-no-files-found: error
