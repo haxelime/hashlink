@@ -92,6 +92,8 @@ jobs:
         with:
           submodules: true
       
+      - run: sudo xcode-select -switch /Applications/Xcode_10.3.app
+
       - run: |
           brew update
           brew install neko
@@ -101,7 +103,7 @@ jobs:
           make
           make release
         env:
-          OSX_SDK: 10.15
+          OSX_SDK: 10.3
           
       - uses: actions/upload-artifact@v2
         with:
