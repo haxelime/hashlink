@@ -102,6 +102,8 @@ jobs:
       - run: |
           make
           make release
+        env:
+          OSX_SDK: 10.3
           
       - uses: actions/upload-artifact@v2
         with:
