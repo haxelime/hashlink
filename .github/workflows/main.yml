@@ -104,10 +104,6 @@ jobs:
           brew bundle
         env:
           OSX_SDK: 10.14
-      
-      - run: |
-          pushd /usr/local/opt/ && ls; popd
-          pushd /usr/local/opt/mbedtls@2 && ls; popd
 
       - run: |
           make
